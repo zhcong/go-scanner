@@ -2,14 +2,23 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"strconv"
 	"sync"
 	"time"
 )
 
 func main() {
-	ip := "192.168.199.1"
-	maxPost := 1000
-	// 通信
+	if len(os.Args) < 3 {
+		println("param empty.")
+		return
+	}
+	ip := os.Args[1]
+	maxPost, err := strconv.Atoi(os.Args[2])
+	if err != nil {
+		println("port error.")
+		return
+	} // 通信
 	toMonitor := make(chan *Task, 10)
 	defer close(toMonitor)
 	// 计数
